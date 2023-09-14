@@ -1,3 +1,13 @@
 #!/bin/bash
 
-python3 kiri.py $1 2> /dev/null
+#rocketlaunch_dir=`pwd` #from https://unix.stackexchange.com/a/52919/470623
+#rocketlaunch_dir=$(echo $PWD)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )" #from https://saturncloud.io/blog/how-to-get-the-directory-where-a-bash-script-is-located/
+
+#python3 ./kiri.py $1 2> /dev/null
+#echo "Sooooo...?"
+
+iconpath=$(python3 $SCRIPT_DIR/kiri.py $1 2> /dev/null)
+echo "$iconpath"
+#echo "$rocketlaunch_dir"
+#echo "$SCRIPT_DIR"
