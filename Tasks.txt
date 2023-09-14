@@ -1,1 +1,3 @@
 - running ./linux-icon-getter without an argument or with a wrong one, results in hanging with no answer. This can make the apps leveraging it look undeterminedly frozen. This should be worked on.
+
+there's two stackoverflow authors, at kiri and other/*.py. look at their profiles, search for their github, search their SO answers' edit history and mimmick these in commits crediting them!
