@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#from kiri's StackOverflow answer: https://askubuntu.com/a/400243 ; answer based in Stefano Palazzo's original code/answer here: https://askubuntu.com/a/52432
 
 import gi
 gi.require_version('Gtk', '3.0')
