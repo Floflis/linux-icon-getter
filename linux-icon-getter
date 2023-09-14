@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python3 kiri.py $2 2> /dev/null

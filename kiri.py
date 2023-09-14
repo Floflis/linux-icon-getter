@@ -5,17 +5,23 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
-icon_name = input("Icon name (case sensitive): ")
+import sys
+
+
+if len(sys.argv) > 1:
+    icon_name = sys.argv[1]
+else:
+    icon_name = input("Icon name (case sensitive): ")
 if icon_name:
     theme = Gtk.IconTheme.get_default()
-    found_icons = set()
+    found_icons = []
     for res in range(0, 512, 2):
         icon = theme.lookup_icon(icon_name, res, 0)
         if icon:
-            found_icons.add(icon.get_filename())
+            found_icons.append(icon.get_filename())
 
-    if found_icons:
-        print("\n".join(found_icons))
-    else:
-        print(icon_name, "was not found")
+if found_icons:
+    print(found_icons[-1])
+else:
+    print(icon_name, "was not found")
 

@@ -1,0 +1,158 @@
+After running "python3 kiri.py", output:
+
+"Gtk-Message: 22:24:37.812: Failed to load module "xapp-gtk3-module"
+Icon name (case sensitive): distributor-logo
+
+(stackoverflow-2.py:212545): Gtk-WARNING **: 22:24:42.023: Theme directory  of theme Floflis has no size field
+
+
+(stackoverflow-2.py:212545): Gtk-WARNING **: 22:24:42.023: Theme directory 22x22/actions of theme Floflis has no size field
+
+
+(stackoverflow-2.py:212545): Gtk-WARNING **: 22:24:42.023: Theme directory 22x22@2x/actions of theme Floflis has no size field
+
+/usr/share/icons/Floflis/scalable/places/distributor-logo.svg
+
+"
+
+In the current behavior, the script begin saying "Icon name (case sensitive): ", which is a prompt, right?
+
+But I want it to support not only user interaction, but also support running programatically when using a flag.
+
+For example: running "python3 kiri.py distributor-logo" mean non-interactive, mean the user or machine is already defining the icon to search for.
+
+Also, in this non-interactive mode, I need another help from you beyond defining that non-interactive mode: outputting that "/usr/share/icons/Floflis/scalable/places/distributor-logo.svg" directly, not more not less (by getting the last line or one line before the last, I don't know, you know the best approach so I'm counting on you Cursor AI).
+
+
+
+
+
+To modify the script to support non-interactive mode, you can use the sys.argv module in Python, which allows you to pass command line arguments to your script.
+
+In the kiri.py script, you can modify the icon_name input line to check if any arguments were passed to the script. If an argument was passed, it will use that as the icon_name. If not, it will prompt the user for input.
+
+Here's how you can modify the kiri.py script:
+
+import sys
+
+if len(sys.argv) > 1:
+    icon_name = sys.argv[1]
+else:
+    icon_name = input("Icon name (case sensitive): ")
+    
+This code checks if there are more than one arguments passed to the script (the first argument is always the script name itself). If there are, it uses the second argument (sys.argv[1]) as the icon_name. If not, it prompts the user for input.
+
+For the second part of your question, to only output the last line of the script (the icon path), you can modify the print statements in the script. Instead of printing the icon paths as they are found, you can store them in a list and only print the last one at the end of the script.
+
+Here's how you can modify the kiri.py script:
+
+found_icons = []
+
+# ... rest of the script ...
+
+if found_icons:
+    print(found_icons[-1])
+else:
+    print(icon_name, "was not found")
+    
+found_icons = []
+
+# ... rest of the script ...
+
+if found_icons:
+    print(found_icons[-1])
+else:
+    print(icon_name, "was not found")
+    
+This code stores the found icon paths in the found_icons list and only prints the last one (found_icons[-1]) at the end of the script. If no icons were found, it prints a message saying the icon was not found.
+
+
+
+
+
+
+
+linux-icon-getter on  main [!?] via 🐍 v3.11.4 
+❯ python3 kiri.py distributor-logo
+Gtk-Message: 22:56:49.341: Failed to load module "xapp-gtk3-module"
+
+(kiri.py:220402): Gtk-WARNING **: 22:56:49.390: Theme directory  of theme Floflis has no size field
+
+
+(kiri.py:220402): Gtk-WARNING **: 22:56:49.390: Theme directory 22x22/actions of theme Floflis has no size field
+
+
+(kiri.py:220402): Gtk-WARNING **: 22:56:49.390: Theme directory 22x22@2x/actions of theme Floflis has no size field
+
+Traceback (most recent call last):
+  File "/home/daniella/Desktop/linux-icon-getter/kiri.py", line 21, in <module>
+    found_icons.add(icon.get_filename())
+    ^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'add'
+
+
+
+
+
+
+
+
+The error you're seeing is because found_icons is a list, but you're trying to use the add method, which is a method for sets, not lists.
+
+To fix this, you can change found_icons.add(icon.get_filename()) to found_icons.append(icon.get_filename()).
+
+Here's the corrected code:
+
+if icon:
+    found_icons.append(icon.get_filename())
+    
+This change will add the icon filename to the found_icons list instead of trying to add it to a set.
+
+Now, when you run the script with an argument, it will use that argument as the icon name and only print the last found icon path. If you run the script without any arguments, it will prompt you for the icon name.
+
+
+
+
+
+
+
+
+"linux-icon-getter on  main [!?] via 🐍 v3.11.4 
+❯ python3 kiri.py distributor-logo
+Gtk-Message: 22:59:47.659: Failed to load module "xapp-gtk3-module"
+
+(kiri.py:220795): Gtk-WARNING **: 22:59:47.706: Theme directory  of theme Floflis has no size field
+
+
+(kiri.py:220795): Gtk-WARNING **: 22:59:47.706: Theme directory 22x22/actions of theme Floflis has no size field
+
+
+(kiri.py:220795): Gtk-WARNING **: 22:59:47.706: Theme directory 22x22@2x/actions of theme Floflis has no size field
+
+/usr/share/icons/Floflis/scalable/places/distributor-logo.svg
+
+"
+
+It is still outputting the full output it get, rather than that "/usr/share/icons/Floflis/scalable/places/distributor-logo.svg" line.
+
+
+
+
+
+
+
+
+The output you're seeing includes warnings from the Gtk module and the final line is the icon path you're interested in. To suppress the Gtk warnings, you can redirect stderr to null. To only print the last icon path, you can modify the print statements in the script.
+
+Here's how you can modify the kiri.py script:
+
+if found_icons:
+    print(found_icons[-1])
+    
+This code will only print the last icon path found.
+
+To suppress the Gtk warnings, you can run your script like this:
+
+python3 kiri.py distributor-logo 2> /dev/null
+
+This command redirects stderr (where the Gtk warnings are printed) to null, effectively suppressing them. The final output of your script will be the last icon path found, if any.
