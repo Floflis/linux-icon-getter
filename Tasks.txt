@@ -1,0 +1,1 @@
+- running ./linux-icon-getter without an argument or with a wrong one, results in hanging with no answer. This can make the apps leveraging it look undeterminedly frozen. This should be worked on.
